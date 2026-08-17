@@ -1,0 +1,11 @@
+name: avilease_dw_demo
+version: 1.0.0
+config-version: 2
+profile: avilease_demo
+model-paths: ["models"]
+models:
+  avilease_dw_demo:
+    staging:
+      +materialized: view
+    marts:
+      +materialized: table

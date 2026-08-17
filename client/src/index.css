@@ -1,0 +1,45 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --crimson: #ec0051;
+  --saffron: #ffc600;
+  --dark: #272727;
+  --avi-deep: #003b51;
+  --avi-mint: #50b9a1;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  font-family: 'Lexend Deca', system-ui, sans-serif;
+  background: #fafafa;
+  color: #272727;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-thumb {
+  background: #cfcfcf;
+  border-radius: 999px;
+}
+
+.geo-dot {
+  background-image: radial-gradient(#ffc600 1.5px, transparent 1.5px);
+  background-size: 18px 18px;
+}
+
+.btn-outline-yellow {
+  @apply inline-flex items-center justify-center rounded-full border-2 border-prodigy-saffron px-6 py-2.5 text-sm font-medium tracking-wide text-prodigy-saffron transition hover:bg-prodigy-saffron hover:text-prodigy-dark;
+}
+
+.btn-solid-crimson {
+  @apply inline-flex items-center justify-center rounded-full bg-prodigy-crimson px-6 py-2.5 text-sm font-semibold tracking-wide text-white transition hover:brightness-110;
+}
