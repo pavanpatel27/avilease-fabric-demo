@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<style>
+  html { background: #F5F8FA; }
+  body {
+    width: 720pt; height: 405pt; margin: 0; padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    display: flex;
+    background-image: url('../assets/content-bg.png');
+    background-size: cover;
+  }
+  .wrap { margin: 36pt 48pt 40pt 52pt; width: 100%; display: flex; flex-direction: column; }
+  .label { color: #00B7C3; font-size: 10pt; letter-spacing: 2pt; text-transform: uppercase; margin: 0 0 6pt 0; }
+  h1 { color: #003B51; font-size: 24pt; margin: 0 0 18pt 0; font-weight: bold; }
+  .cols { display: flex; gap: 18pt; flex: 1; }
+  .card {
+    flex: 1;
+    background: #FFFFFF;
+    border-radius: 6pt;
+    padding: 20pt 18pt;
+    border-left: 5pt solid #003B51;
+  }
+  .card.mid { border-left-color: #00B7C3; }
+  .card.last { border-left-color: #EC0051; }
+  .who { color: #003B51; font-size: 13pt; font-weight: bold; margin: 0 0 10pt 0; }
+  .how { color: #475569; font-size: 12pt; margin: 0; line-height: 1.45; }
+</style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="label">Use cases</p>
+    <h1>Who wins on day one</h1>
+    <div class="cols">
+      <div class="card">
+        <p class="who">Leasing ops</p>
+        <p class="how">Live fleet — on lease, coming off, parked — without exporting from Leaseworks.</p>
+      </div>
+      <div class="card mid">
+        <p class="who">Finance</p>
+        <p class="how">Rent and YTD next to the aircraft from Core Financial — not a second spreadsheet.</p>
+      </div>
+      <div class="card last">
+        <p class="who">Leadership</p>
+        <p class="how">Same figures in Power BI. If ops changes, the pack is already aligned.</p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

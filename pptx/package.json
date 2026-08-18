@@ -1,0 +1,18 @@
+{
+  "name": "pptx",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "assets": "node gen-assets.js",
+    "build": "node gen-assets.js && node build.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "playwright": "^1.62.1",
+    "pptxgenjs": "^4.0.1",
+    "sharp": "^0.35.3"
+  }
+}
