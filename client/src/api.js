@@ -1,3 +1,5 @@
+import { staticApi } from './staticApi';
+
 async function getJson(url) {
   const res = await fetch(url);
   if (!res.ok) {
@@ -16,7 +18,7 @@ function qs(params = {}) {
   return s ? `?${s}` : '';
 }
 
-export const api = {
+const liveApi = {
   kpis: () => getJson('/api/kpis'),
   fleetByType: () => getJson('/api/fleet-by-type'),
   leaseStatus: () => getJson('/api/lease-status'),
@@ -31,6 +33,8 @@ export const api = {
   search: (q) => getJson(`/api/search${qs({ q })}`),
   health: () => getJson('/api/health'),
 };
+
+export const api = import.meta.env.VITE_STATIC === 'true' ? staticApi : liveApi;
 
 export function formatRent(value) {
   if (value == null) return '—';

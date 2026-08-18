@@ -1,5 +1,8 @@
 import IngestLook from './IngestLook';
-import { FabricMark, MsSquares } from './fabric/MsIcons';
+import FabricBlueprint from './FabricBlueprint';
+import ArchitectureDecisions from './ArchitectureDecisions';
+import CollabHero from './CollabHero';
+import { CopilotIcon, FabricMark, MsSquares } from './fabric/MsIcons';
 
 const TODAY = [
   {
@@ -45,22 +48,48 @@ const WHO = [
   { who: 'Leadership', how: 'The same figures in Power BI. If ops changes, the pack is already aligned.' },
 ];
 
+const AI_STEPS = [
+  {
+    n: '1',
+    title: 'Consolidate',
+    body: 'One row per aircraft. Status, rent, and transitions already agree — or the row is held.',
+  },
+  {
+    n: '2',
+    title: 'Decide',
+    body: 'Ops and the board use that same row in the fleet screen and Power BI. No second version of the truth.',
+  },
+  {
+    n: '3',
+    title: 'Ask',
+    body: 'Then Copilot in Microsoft Fabric can answer in English — because it is reading checked data, not three spreadsheets.',
+  },
+];
+
+const AI_ASKS = [
+  'Which tails come off lease in 90 days, and what rent is at risk?',
+  'Where is utilisation weakest by region?',
+  'Which lessees concentrate more than 20% of revenue?',
+];
+
 const PHASES = [
   { phase: 'Now', body: 'This demo — one joined fleet from the three systems you already run.' },
   { phase: 'Next', body: 'Alerts when an aircraft is coming off lease, in minutes not overnight.' },
-  { phase: 'Then', body: 'Roll out to the wider team, with AviLease logins.' },
+  { phase: 'Then', body: 'Wider rollout — and Copilot on the same trusted fleet, not on Excel.' },
 ];
 
 export default function ArchitecturePage({ onConfigure, onPipeline }) {
   return (
     <div className="mx-auto max-w-5xl space-y-8">
+      <CollabHero />
+
       <header>
         <div className="flex flex-wrap items-center gap-2">
           <MsSquares className="h-5 w-5" />
           <span className="text-sm font-semibold text-[#242424]">Microsoft Fabric</span>
           <span className="text-prodigy-muted">·</span>
-          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-prodigy-crimson">
-            Prodigy for AviLease
+          <span className="text-[10px] font-semibold uppercase tracking-[0.2em] text-[#C5A572]">
+            Prodigy × AviLease
           </span>
         </div>
         <h1 className="mt-3 text-3xl font-normal tracking-tight text-avi-deep md:text-4xl">
@@ -68,7 +97,8 @@ export default function ArchitecturePage({ onConfigure, onPipeline }) {
         </h1>
         <p className="mt-3 max-w-2xl text-base leading-relaxed text-prodigy-muted">
           Leaseworks, Core Financial, and Aerlytix stay. We join them so utilisation, rent, and
-          transitions sit on the same aircraft — and nobody rebuilds the pack in Excel.
+          transitions sit on the same aircraft. That joined picture is what reporting — and later
+          AI — can safely use.
         </p>
       </header>
 
@@ -94,6 +124,10 @@ export default function ArchitecturePage({ onConfigure, onPipeline }) {
 
       <IngestLook />
 
+      <ArchitectureDecisions />
+
+      <FabricBlueprint onOpenWorkspace={onConfigure} />
+
       <section>
         <h2 className="text-lg font-semibold text-avi-deep">Why leadership can trust the data</h2>
         <p className="mt-1 text-sm text-prodigy-muted">
@@ -107,6 +141,44 @@ export default function ArchitecturePage({ onConfigure, onPipeline }) {
               <p className="mt-1.5 text-sm leading-relaxed text-prodigy-muted">{t.body}</p>
             </article>
           ))}
+        </div>
+      </section>
+
+      <section>
+        <div className="flex flex-wrap items-center gap-2">
+          <CopilotIcon className="h-8 w-8" />
+          <h2 className="text-lg font-semibold text-avi-deep">
+            Why this consolidation is the AI step
+          </h2>
+        </div>
+        <p className="mt-1 text-sm text-prodigy-muted">
+          AI does not fix broken data. If rent lives in Core Financial and status lives in
+          Leaseworks, a chatbot will guess. Join first, then ask.
+        </p>
+        <div className="mt-3 grid gap-3 md:grid-cols-3">
+          {AI_STEPS.map((s) => (
+            <article key={s.n} className="rounded-xl border border-prodigy-line bg-white p-4">
+              <div className="text-[10px] font-bold uppercase tracking-wide text-[#5B2BE0]">
+                Step {s.n}
+              </div>
+              <h3 className="mt-1 text-sm font-semibold text-avi-deep">{s.title}</h3>
+              <p className="mt-1.5 text-sm leading-relaxed text-prodigy-muted">{s.body}</p>
+            </article>
+          ))}
+        </div>
+        <div className="mt-3 rounded-xl border border-[#B4A0FF]/40 bg-white p-4">
+          <p className="text-[11px] font-bold uppercase tracking-wide text-[#5B2BE0]">
+            Questions this data can answer — once it is joined
+          </p>
+          <ul className="mt-2 space-y-1.5 text-sm text-avi-deep">
+            {AI_ASKS.map((q) => (
+              <li key={q}>“{q}”</li>
+            ))}
+          </ul>
+          <p className="mt-3 text-xs text-prodigy-muted">
+            That is Copilot in Fabric and Power BI — on AviLease’s gold fleet, not a parallel AI
+            project.
+          </p>
         </div>
       </section>
 

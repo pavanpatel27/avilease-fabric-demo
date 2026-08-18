@@ -8,6 +8,7 @@ import AnalyticsPage from './components/AnalyticsPage';
 import FabricPage from './components/FabricPage';
 import ArchitecturePage from './components/ArchitecturePage';
 import SystemsDemoPage from './components/SystemsDemoPage';
+import CollabFooter from './components/CollabFooter';
 
 export default function App() {
   const [page, setPage] = useState('architecture');
@@ -27,7 +28,7 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-prodigy-soft">
+    <div className="min-h-screen bg-[#F7F4EE]">
       <TopBar page={page} setPage={setPage} meta={meta} />
       <main className="mx-auto max-w-6xl p-4 md:p-8">
         {page === 'architecture' && (
@@ -54,6 +55,7 @@ export default function App() {
         {page === 'pipeline' && <PipelinePage />}
         {page === 'analytics' && <AnalyticsPage />}
       </main>
+      <CollabFooter />
     </div>
   );
 }

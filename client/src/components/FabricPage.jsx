@@ -129,6 +129,20 @@ function Home({ onGoPipeline, onAnalytics }) {
         </p>
       </div>
 
+      <div className="grid gap-2 sm:grid-cols-3">
+        {[
+          ['Collect', 'Data Factory', 'Hourly from three systems'],
+          ['Store', 'OneLake + lakehouse', 'Bronze files · silver/gold Delta'],
+          ['Serve', 'DirectLake + SQL', 'Ops UI, Power BI, warehouse'],
+        ].map(([k, t, d]) => (
+          <div key={k} className="rounded-lg border border-[#E1DFDD] bg-white px-3 py-2.5">
+            <div className="text-[10px] font-bold uppercase tracking-wide text-[#00B7C3]">{k}</div>
+            <div className="text-sm font-semibold text-[#242424]">{t}</div>
+            <div className="text-xs text-[#605E5C]">{d}</div>
+          </div>
+        ))}
+      </div>
+
       <div>
         <h3 className="mb-2 text-sm font-semibold text-[#242424]">Recommended for this workspace</h3>
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
@@ -232,28 +246,60 @@ function WorkloadsGrid() {
 }
 
 function OneLakePane() {
-  const folders = [
-    'Files / bronze / leaseworks',
-    'Files / bronze / core_finance',
-    'Files / bronze / aerlytix',
-    'Tables / silver_leases',
-    'Tables / gold_fleet',
-    'Tables / gold_revenue',
+  const zones = [
+    {
+      layer: 'Bronze · Files',
+      format: 'Parquet as landed',
+      rows: [
+        ['Files/bronze/leaseworks/', 'Leases, aircraft, lessee — from Salesforce'],
+        ['Files/bronze/core_finance/', 'Rent, invoices, GL — from SunSystems'],
+        ['Files/bronze/aerlytix/', 'Transitions, utilisation — from Aerlytix'],
+      ],
+    },
+    {
+      layer: 'Silver · Tables',
+      format: 'Delta · cleaned, still by source',
+      rows: [
+        ['Tables/silver_leases', 'Typed tail / MSN, status, lessee'],
+        ['Tables/silver_rent', 'Currency aligned, monthly rent'],
+        ['Tables/silver_transitions', 'Off-lease events, days in state'],
+      ],
+    },
+    {
+      layer: 'Gold · Tables',
+      format: 'Delta · one grain the business uses',
+      rows: [
+        ['Tables/gold_fleet', 'One row per aircraft — ops + board'],
+        ['Tables/gold_revenue', 'YTD rent by tail and month'],
+        ['wh_finance (warehouse)', 'SQL view over gold — finance pack'],
+      ],
+    },
   ];
   return (
-    <div>
-      <div className="mb-3 flex items-center gap-2">
+    <div className="space-y-4">
+      <div className="flex items-center gap-2">
         <OneLakeIcon className="h-8 w-8" />
         <div>
           <h2 className="text-xl font-semibold text-[#242424]">OneLake</h2>
-          <p className="text-sm text-[#605E5C]">lh_avilease · one copy of AviLease data</p>
+          <p className="text-sm text-[#605E5C]">
+            lh_avilease · one copy. Power BI DirectLake reads gold — it does not import another file.
+          </p>
         </div>
       </div>
-      <div className="rounded-lg border border-[#E1DFDD] bg-white">
-        {folders.map((f) => (
-          <div key={f} className="border-b border-[#EDEBE9] px-4 py-2.5 text-sm last:border-0">
-            {f}
-          </div>
+      <div className="grid gap-3 lg:grid-cols-3">
+        {zones.map((z) => (
+          <article key={z.layer} className="rounded-lg border border-[#E1DFDD] bg-white">
+            <div className="border-b border-[#EDEBE9] px-3 py-2">
+              <div className="text-sm font-semibold text-[#242424]">{z.layer}</div>
+              <div className="font-mono text-[11px] text-[#00B7C3]">{z.format}</div>
+            </div>
+            {z.rows.map(([path, holds]) => (
+              <div key={path} className="border-b border-[#EDEBE9] px-3 py-2.5 last:border-0">
+                <div className="font-mono text-[12px] font-semibold text-[#242424]">{path}</div>
+                <div className="text-xs text-[#605E5C]">{holds}</div>
+              </div>
+            ))}
+          </article>
         ))}
       </div>
     </div>

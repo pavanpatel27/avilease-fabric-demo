@@ -23,6 +23,25 @@ Open **http://localhost:3000**
 
 If charts are empty, run the seed script again, then refresh.
 
+## Host the demo (no laptop)
+
+GitHub **cannot run the Node API**. It **can** host the screens as a static site on **GitHub Pages**. The fleet data is baked in from `server/data/warehouse.json`.
+
+After you push to `main`:
+
+1. Repo → **Settings** → **Pages**
+2. Source: **GitHub Actions**
+3. Wait for the **Deploy demo to GitHub Pages** workflow
+4. Share:
+
+`https://<your-github-user>.github.io/Avilease-DatawareHousedemo/`
+
+Example if the repo stays under GlicTech:
+
+`https://glictech.github.io/Avilease-DatawareHousedemo/`
+
+Need a live API or custom domain later: Azure App Service or Render — GitHub Pages is the zero-ops demo link.
+
 ## What to look at
 
 | Page | What to review |

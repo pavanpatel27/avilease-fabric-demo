@@ -20,7 +20,8 @@ export default {
           teal: '#00697B',
           mint: '#50B9A1',
           mist: '#D2EAD5',
-          fog: '#FAFBFB',
+          fog: '#F7F4EE',
+          gold: '#C5A572',
         },
       },
       fontFamily: {
