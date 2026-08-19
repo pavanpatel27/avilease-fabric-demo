@@ -182,11 +182,11 @@ const DECISIONS = [
 
   {
 
-    decide: 'Keep the three systems',
+    decide: 'Leverage the three systems',
 
-    means: 'Leaseworks, Core Financial, and Aerlytix stay. Staff keep working where they work today.',
+    means: 'Join data from Leaseworks, Core Financial, and Aerlytix — the core systems already in place. Staff keep working where they work today.',
 
-    why: 'We are not a rip-and-replace. We join what you already pay for.',
+    why: 'The scope is unification and trusted reporting, not a rip-and-replace of systems AviLease already runs.',
 
   },
 
@@ -232,11 +232,11 @@ const DECISIONS = [
 
   {
 
-    decide: 'Do not put finance inside the CRM platform',
+    decide: 'Core Financial owns rent and books',
 
-    means: 'Keep Core Financial as the source of the books, and let the lakehouse sit next to it for reporting.',
+    means: 'In the joined fleet row, monthly rent and GL figures come from Core Financial. Leaseworks supplies ops context; Aerlytix supplies forecasts.',
 
-    why: 'The full books are not in Leaseworks. If finance is CRM-only, rent can be missing from the numbers you show.',
+    why: 'This is not about running finance in a CRM — it is which system defines the money in the pack. The ledger already lives in Core Financial, so board-ready rent must trace there.',
 
   },
 
@@ -342,7 +342,7 @@ export default function ArchitectureDecisions() {
 
         </p>
 
-        <h2 className="mt-1 text-lg font-semibold text-avi-deep">What we chose — and why it matters</h2>
+        <h2 className="mt-1 text-lg font-semibold text-avi-deep">What we recommend — and why it matters</h2>
 
         <p className="mt-1 max-w-2xl text-sm text-prodigy-muted">
 
@@ -496,7 +496,7 @@ export default function ArchitectureDecisions() {
 
         <div className="border-b border-prodigy-line bg-avi-fog px-4 py-2.5">
 
-          <h3 className="text-sm font-semibold text-avi-deep">The six decisions</h3>
+          <h3 className="text-sm font-semibold text-avi-deep">Six recommendations</h3>
 
           <p className="text-xs text-prodigy-muted">In plain language — what we do, and what you get.</p>
 
@@ -510,7 +510,7 @@ export default function ArchitectureDecisions() {
 
               <tr className="border-b border-prodigy-line text-[11px] font-semibold uppercase tracking-wide text-prodigy-muted">
 
-                <th className="px-4 py-2.5">We decided</th>
+                <th className="px-4 py-2.5">We recommend</th>
 
                 <th className="px-4 py-2.5">What that looks like</th>
 
