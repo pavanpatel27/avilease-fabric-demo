@@ -1,6 +1,7 @@
 import {
   ApiIcon,
   DataFactoryIcon,
+  ExcelIcon,
   FabricMark,
   OneLakeIcon,
   PowerBiIcon,
@@ -30,9 +31,8 @@ export default function IngestLook() {
       <section>
         <h2 className="text-lg font-semibold text-avi-deep">How the data comes together</h2>
         <p className="mt-1 text-sm text-prodigy-muted">
-          Core systems (and other sources) you already use. Microsoft collects them on a
-          schedule, then we join on tail number. Excel can also feed early prototypes — the
-          checked joined row is what ops and Power BI rely on.
+          Core systems plus spreadsheets and other feeds you already use. Microsoft collects them on a
+          schedule, then we join on tail number — including market data such as Cirium when needed.
         </p>
 
         <div
@@ -61,10 +61,37 @@ export default function IngestLook() {
               />
               <SourceCard
                 Icon={ApiIcon}
-                product="Aviation platform"
+                product="Forecasting tool"
                 name="Aerlytix"
-                how="Projected rent,MR inflow and EOL accural"
+                how="Projected rent, MR, utilisation — flight hours, cycles, and future event dates"
                 preview={<AerlytixMini />}
+              />
+            </div>
+
+            <div className="flex items-center gap-3">
+              <div className="h-px flex-1 bg-prodigy-line" />
+              <span className="text-[10px] font-bold uppercase tracking-[0.18em] text-prodigy-muted">
+                Additional inputs
+              </span>
+              <div className="h-px flex-1 bg-prodigy-line" />
+            </div>
+
+            <div className="mx-auto grid max-w-[560px] grid-cols-2 gap-3">
+              <SourceCard
+                Icon={ExcelIcon}
+                product="Spreadsheet"
+                name="Excel packs"
+                how="Early prototypes and one-off supplements — landed in bronze, checked like any other feed"
+                preview={<ExcelMini />}
+                muted
+              />
+              <SourceCard
+                Icon={OtherSourcesIcon}
+                product="Market / reference"
+                name="Other systems"
+                how="Cirium fleet data, ad hoc APIs, future sources — same join on tail number"
+                preview={<OtherSystemsMini />}
+                muted
               />
             </div>
 
@@ -84,7 +111,7 @@ export default function IngestLook() {
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <Step n="1" t="Collect" d="Pull from systems + spreadsheets" />
+                <Step n="1" t="Collect" d="Pull from systems, spreadsheets, and other feeds" />
                 <Step n="2" t="Check" d="Match tails, hold broken rows" />
                 <Step n="3" t="Publish" d="Fleet screen + Power BI" />
               </div>
@@ -107,9 +134,13 @@ function Step({ n, t, d }) {
   );
 }
 
-function SourceCard({ Icon, product, name, how, preview }) {
+function SourceCard({ Icon, product, name, how, preview, muted = false }) {
   return (
-    <article className="overflow-hidden rounded-xl border border-prodigy-line bg-white shadow-sm">
+    <article
+      className={`overflow-hidden rounded-xl border bg-white shadow-sm ${
+        muted ? 'border-dashed border-prodigy-line/80' : 'border-prodigy-line'
+      }`}
+    >
       <div className="flex items-center gap-2 border-b border-prodigy-line px-3 py-2">
         <Icon className="h-7 w-7" />
         <div>
@@ -150,7 +181,7 @@ function FinanceMini() {
       <div className="mb-1 font-bold">What finance already sees</div>
       {[
         ['EI-AVL', '$512k', 'USD'],
-        ['9H-ALI', '$0', 'off-wing'],
+        ['9H-ALI', '$0', 'USD'],
         ['A6-AVC', '$890k', 'USD'],
       ].map((r) => (
         <div key={r[0]} className="grid grid-cols-3 gap-1 border-t border-white py-0.5">
@@ -166,18 +197,81 @@ function FinanceMini() {
 function AerlytixMini() {
   return (
     <div className="rounded bg-[#0B3C5D] p-2 text-[10px] text-white">
-      <div className="mb-1 font-bold text-[#7FDDD0]">Forword Cashflow</div>
+      <div className="mb-1 font-bold text-[#7FDDD0]">Forward forecast</div>
+      <div className="grid grid-cols-3 gap-1 border-b border-white/20 pb-0.5 text-[9px] uppercase tracking-wide text-white/55">
+        <span>Tail</span>
+        <span>FH / FC</span>
+        <span>Next event</span>
+      </div>
       {[
-        ['9H-ALI', 'Redelivery', 'Day 12'],
-        ['EI-KST', 'Off lease', 'Parked'],
+        ['EI-AVL', '4,820 · 2,410', 'MR check Sep \'26'],
+        ['9H-ALI', '3,940 · 1,880', 'Redelivery 14 Mar \'27'],
+        ['A6-AVC', '6,100 · 3,050', 'EOL accrual Jun \'28'],
       ].map((r) => (
         <div key={r[0]} className="grid grid-cols-3 gap-1 border-t border-white/20 py-0.5">
+          <span className="font-semibold">{r[0]}</span>
+          <span>{r[1]}</span>
+          <span className="text-[#7FDDD0]">{r[2]}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function ExcelMini() {
+  return (
+    <div className="rounded bg-[#E8F5EE] p-2 text-[10px] text-[#1D6F42]">
+      <div className="mb-1 font-bold">Fleet supplement.xlsx</div>
+      {[
+        ['EI-AVL', 'Parked', 'Feb pack'],
+        ['N734JC', 'On lease', 'Marketing'],
+      ].map((r) => (
+        <div key={r[0]} className="grid grid-cols-3 gap-1 border-t border-white/70 py-0.5">
+          <span className="font-semibold">{r[0]}</span>
+          <span>{r[1]}</span>
+          <span className="text-[#217346]/80">{r[2]}</span>
+        </div>
+      ))}
+    </div>
+  );
+}
+
+function OtherSystemsMini() {
+  return (
+    <div className="rounded bg-[#F4F0E8] p-2 text-[10px] text-[#3D3428]">
+      <div className="mb-1 font-bold text-[#8B6914]">Cirium · fleet reference</div>
+      {[
+        ['EI-AVL', 'A320-251N', '92% util'],
+        ['9H-ALI', 'B737-8', '78% util'],
+      ].map((r) => (
+        <div key={r[0]} className="grid grid-cols-3 gap-1 border-t border-white/60 py-0.5">
           <span className="font-semibold">{r[0]}</span>
           <span>{r[1]}</span>
           <span>{r[2]}</span>
         </div>
       ))}
+      <div className="mt-1 border-t border-white/60 pt-1 text-[9px] text-prodigy-muted">
+        + other APIs when ready
+      </div>
     </div>
+  );
+}
+
+function OtherSourcesIcon({ className = 'h-8 w-8' }) {
+  return (
+    <svg viewBox="0 0 32 32" className={className} aria-hidden>
+      <rect width="32" height="32" rx="6" fill="#003B51" />
+      <circle cx="11" cy="14" r="3" fill="#50B9A1" />
+      <circle cx="21" cy="11" r="2.5" fill="#C5A572" />
+      <circle cx="20" cy="21" r="2.5" fill="#fff" fillOpacity="0.85" />
+      <path
+        d="M8 24h16"
+        stroke="#50B9A1"
+        strokeWidth="1.5"
+        strokeLinecap="round"
+        strokeDasharray="2 2"
+      />
+    </svg>
   );
 }
 

@@ -75,7 +75,7 @@ const AI_ASKS = [
 
 const PHASES = [
   { phase: '1) Prototype / proof of concept', body: 'One joined fleet row that ops and stakeholders can trust.' },
-  { phase: '2) Integrate LW + Core + Aerlytix', body: 'Connect the three sources, then publish one fleet row for reports and screens.' },
+  { phase: '2) Integrate LW + Core + Aerlytix', body: 'Connect the core systems, then add Excel and other feeds (e.g. Cirium) on the same joined fleet row.' },
   { phase: '3) Copilot + additional integrations', body: 'Add Copilot in Microsoft Fabric on the trusted fleet, then extend to other data sources when ready.' },
 ];
 
