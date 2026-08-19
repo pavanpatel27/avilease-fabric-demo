@@ -30,8 +30,9 @@ export default function IngestLook() {
       <section>
         <h2 className="text-lg font-semibold text-avi-deep">How the data comes together</h2>
         <p className="mt-1 text-sm text-prodigy-muted">
-          Three systems you already pay for. Microsoft collects them on a schedule. We join on
-          tail number. Excel is not in the path.
+          Core systems (and other sources) you already use. Microsoft collects them on a
+          schedule, then we join on tail number. Excel can also feed early prototypes — the
+          checked joined row is what ops and Power BI rely on.
         </p>
 
         <div
@@ -55,19 +56,17 @@ export default function IngestLook() {
                 Icon={SqlIcon}
                 product="Finance system"
                 name="Core Financial"
-                how="Rent and books — the money source of truth"
+                how="General Ledger — the money source of truth"
                 preview={<FinanceMini />}
               />
               <SourceCard
                 Icon={ApiIcon}
                 product="Aviation platform"
                 name="Aerlytix"
-                how="Transitions and off-lease — the lifecycle view"
+                how="Projected rent,MR inflow and EOL accural"
                 preview={<AerlytixMini />}
               />
             </div>
-
-            <JoinExample />
 
             <div className="flex justify-center text-[13px] font-semibold text-[#0078D4]">
               ↓ collected every hour · not copied by hand
@@ -85,7 +84,7 @@ export default function IngestLook() {
                 </div>
               </div>
               <div className="grid grid-cols-3 gap-2">
-                <Step n="1" t="Collect" d="Pull from the three systems" />
+                <Step n="1" t="Collect" d="Pull from systems + spreadsheets" />
                 <Step n="2" t="Check" d="Match tails, hold broken rows" />
                 <Step n="3" t="Publish" d="Fleet screen + Power BI" />
               </div>
@@ -93,46 +92,6 @@ export default function IngestLook() {
           </div>
         </div>
       </section>
-    </div>
-  );
-}
-
-function JoinExample() {
-  return (
-    <div className="rounded-xl border border-avi-deep/15 bg-white px-4 py-3">
-      <div className="text-[11px] font-bold uppercase tracking-wide text-prodigy-crimson">
-        Example — one tail, three facts, one row
-      </div>
-      <div className="mt-2 overflow-x-auto">
-        <table className="w-full min-w-[640px] text-sm">
-          <thead>
-            <tr className="text-left text-[10px] uppercase tracking-wide text-prodigy-muted">
-              <th className="py-1 pr-3">Tail</th>
-              <th className="py-1 pr-3">From Leaseworks</th>
-              <th className="py-1 pr-3">From Core Financial</th>
-              <th className="py-1">From Aerlytix</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr className="border-t border-prodigy-line">
-              <td className="py-2 pr-3 font-semibold text-avi-deep">EI-AVL</td>
-              <td className="py-2 pr-3">A320neo · Ryanair · on lease</td>
-              <td className="py-2 pr-3">$512k / month rent</td>
-              <td className="py-2">No transition</td>
-            </tr>
-            <tr className="border-t border-prodigy-line bg-prodigy-crimson/[0.03]">
-              <td className="py-2 pr-3 font-semibold text-avi-deep">9H-ALI</td>
-              <td className="py-2 pr-3">B737 MAX · Malta Air</td>
-              <td className="py-2 pr-3">$0 this month</td>
-              <td className="py-2 text-prodigy-crimson">Redelivery · day 12</td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-      <p className="mt-2 text-[11px] text-prodigy-muted">
-        That joined row is what ops and Power BI both see. We do not ask Salesforce to hold the
-        finance books.
-      </p>
     </div>
   );
 }
@@ -207,7 +166,7 @@ function FinanceMini() {
 function AerlytixMini() {
   return (
     <div className="rounded bg-[#0B3C5D] p-2 text-[10px] text-white">
-      <div className="mb-1 font-bold text-[#7FDDD0]">What asset already sees</div>
+      <div className="mb-1 font-bold text-[#7FDDD0]">Forword Cashflow</div>
       {[
         ['9H-ALI', 'Redelivery', 'Day 12'],
         ['EI-KST', 'Off lease', 'Parked'],
@@ -277,19 +236,61 @@ function FleetLook() {
 }
 
 function PbiLook() {
+  const rows = [
+    { tail: 'EI-AVL', value: 14.2 },
+    { tail: '9H-ALI', value: 11.8 },
+    { tail: 'N734JC', value: 9.4, tooltip: '9.4% · $512k rent' },
+    { tail: 'EI-AVR', value: 6.1 },
+  ];
+  const max = 16;
+  const portfolioAvg = 10.2;
+
   return (
-    <div className="space-y-2">
-      <div className="flex h-16 items-end gap-1 rounded-lg bg-[#F3F2F1] px-3 py-2">
-        {[40, 55, 48, 70, 62, 80, 75].map((h, i) => (
-          <div
-            key={i}
-            className="flex-1 rounded-t"
-            style={{ height: `${h}%`, background: i % 2 ? '#F2C811' : '#0078D4' }}
-          />
-        ))}
+    <div
+      className="rounded-lg border border-[#EDEBE9] bg-white p-3"
+      style={{ fontFamily: '"Segoe UI", system-ui, sans-serif' }}
+    >
+      <div className="text-[11px] font-semibold leading-snug text-[#242424]">
+        Annualised rent ÷ net book value, by tail — dashed line is the portfolio average
       </div>
-      <p className="text-[11px] text-prodigy-muted">
-        Revenue vs budget — the Core Financial figure, on the same tails ops is looking at.
+
+      <div className="relative mt-3 pl-14">
+        <div
+          className="pointer-events-none absolute inset-y-0 z-10 border-l-2 border-dashed border-[#605E5C]"
+          style={{ left: `calc(3.5rem + (100% - 3.5rem) * ${portfolioAvg / max})` }}
+        />
+
+        <div className="pointer-events-none absolute inset-y-0 left-14 right-0 flex justify-between">
+          {[0, 1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-full w-px bg-[#EDEBE9]" />
+          ))}
+        </div>
+
+        <div className="relative space-y-2.5">
+          {rows.map((r) => (
+            <div key={r.tail} className="relative flex items-center gap-2">
+              <span className="absolute -left-14 w-12 text-right text-[10px] font-medium text-[#242424]">
+                {r.tail}
+              </span>
+              <div className="relative h-[18px] flex-1">
+                <div
+                  className="h-full rounded-[2px] bg-[#118DFF]"
+                  style={{ width: `${(r.value / max) * 100}%` }}
+                />
+                {r.tooltip && (
+                  <div className="absolute left-[58%] top-1/2 z-20 -translate-y-1/2 rounded bg-[#323130]/90 px-2 py-1 text-[9px] text-white shadow-md">
+                    {r.tooltip}
+                  </div>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
+
+      <p className="mt-2.5 text-[10px] text-[#605E5C]">
+        Leadership pack on the same joined gold fleet — rent and book value from Core
+        Financial, on the tails ops is viewing.
       </p>
     </div>
   );

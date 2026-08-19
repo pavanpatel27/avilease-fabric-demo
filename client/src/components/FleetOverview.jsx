@@ -58,7 +58,7 @@ export default function FleetOverview({ onMeta, onInspect }) {
           ...a.kpis,
           deltas: {
             totalAircraft: `${a.total} matching`,
-            fleetUtilisation: filters.status ? 'filtered' : '+1.2 pts',
+            fleetUtilisation: filters.status ? 'filtered' : '+6.1 pts',
             ytdRevenue: filters.aircraftType || filters.region ? 'filtered set' : '+6.4%',
             avgLeaseRemaining: 'from selection',
           },

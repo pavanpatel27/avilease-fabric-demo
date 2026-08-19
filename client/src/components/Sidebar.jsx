@@ -14,12 +14,7 @@ export default function Sidebar({ setPage, pipeline }) {
         />
       </Section>
 
-      <Section title="Systems & proof">
-        <NavBtn
-          onClick={() => setPage('systems')}
-          title="Source systems"
-          desc="Leaseworks · Core · Aerlytix"
-        />
+      <Section title="Proof & ingestion">
         <NavBtn
           onClick={() => setPage('pipeline')}
           title="Ingestion run"

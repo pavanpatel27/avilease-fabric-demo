@@ -14,9 +14,10 @@ export default function ChartsRow({
   const counts = (fleetByType || []).map((r) => r.count);
   const statusLabels = (leaseStatus || []).map((r) => r.status);
   const statusSeries = (leaseStatus || []).map((r) => r.count);
-  const months = (revenue || []).map((r) => r.month);
-  const rev = (revenue || []).map((r) => r.revenue);
-  const bud = (revenue || []).map((r) => r.budget);
+  const recent = (revenue || []).slice(-6);
+  const months = recent.map((r) => r.month);
+  const rev = recent.map((r) => r.revenue);
+  const bud = recent.map((r) => r.budget);
 
   return (
     <div className="grid gap-3 lg:grid-cols-[1.6fr_1fr]">
@@ -58,9 +59,9 @@ export default function ChartsRow({
           )}
         </Panel>
 
-        <Panel title="Revenue vs budget" subtitle="Area · Core Financial $M" loading={loading}>
+        <Panel title="Revenue vs budget" subtitle="Last 6 months · Core Financial $M" loading={loading}>
           {!loading && months.length > 0 && (
-            <ApexAreaDual categories={months} revenue={rev} budget={bud} height={110} />
+            <ApexAreaDual categories={months} revenue={rev} budget={bud} height={165} />
           )}
         </Panel>
       </div>

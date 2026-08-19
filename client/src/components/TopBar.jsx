@@ -4,7 +4,6 @@ import { AviLeaseMark } from './AviLeaseMark';
 const PAGES = [
   { id: 'architecture', label: 'How it works' },
   { id: 'configure', label: 'Microsoft Fabric' },
-  { id: 'systems', label: "Today's systems" },
   { id: 'pipeline', label: 'Sync data' },
   { id: 'overview', label: 'Fleet' },
   { id: 'analytics', label: 'Analytics' },

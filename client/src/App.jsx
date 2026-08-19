@@ -9,6 +9,7 @@ import FabricPage from './components/FabricPage';
 import ArchitecturePage from './components/ArchitecturePage';
 import SystemsDemoPage from './components/SystemsDemoPage';
 import CollabFooter from './components/CollabFooter';
+import AviBackground from './components/AviBackground';
 
 export default function App() {
   const [page, setPage] = useState('architecture');
@@ -28,7 +29,9 @@ export default function App() {
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F4EE]">
+    <div className="relative min-h-screen bg-[#F7F4EE]">
+      <AviBackground />
+      <div className="relative z-10">
       <TopBar page={page} setPage={setPage} meta={meta} />
       <main className="mx-auto max-w-6xl p-4 md:p-8">
         {page === 'architecture' && (
@@ -56,6 +59,7 @@ export default function App() {
         {page === 'analytics' && <AnalyticsPage />}
       </main>
       <CollabFooter />
+      </div>
     </div>
   );
 }

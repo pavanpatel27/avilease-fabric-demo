@@ -1,6 +1,6 @@
 const OPTIONS = [
   {
-    name: 'Spreadsheets',
+    name: 'Excel packs',
     tag: 'Today',
     chosen: false,
     cells: ['No', 'No', 'No', 'No'],
@@ -16,6 +16,13 @@ const OPTIONS = [
     tag: 'Cheap',
     chosen: false,
     cells: ['Yes', 'No', 'Yes', 'Unsafe'],
+  },
+  {
+    name: 'Salesforce solution (native SF)',
+    tag: 'SF',
+    chosen: false,
+    // Not the joined “replayable” analytics story we need for ops + board.
+    cells: ['No', 'No', 'No', 'No'],
   },
   {
     name: 'Lakehouse — our pick',
@@ -35,11 +42,34 @@ const OPTIONS = [
     chosen: false,
     cells: ['Yes', 'Maybe', 'Yes', 'Costly'],
   },
+  {
+    name: 'Salesforce Data Cloud',
+    tag: 'DC',
+    chosen: false,
+    // Works great for customer/event unification, but this demo is about a single joined fleet row
+    // that ops + Power BI can query consistently (with Core Financial as the money source).
+    cells: ['No', 'Weak', 'Hard', 'Later'],
+    logoText: 'DC',
+    logoTint: '#E0F2FF',
+    comment:
+      'Great for Salesforce events, but this demo needs one joined fleet row with Core Financial as the money source.',
+  },
+  {
+    name: 'Snowflake',
+    tag: 'SF',
+    chosen: false,
+    // Snowflake is a strong warehouse, but it would add a second reporting warehouse beside Fabric.
+    cells: ['No', 'Weak', 'Hard', 'Later'],
+    logoText: 'SN',
+    logoTint: '#F3F7FF',
+    comment:
+      'Fabric already hosts the joined fleet lakehouse, so teams can use one trusted workspace for ops and reporting.',
+  },
 ];
 
 const NEEDS = [
   'Keep what the source sent',
-  'One number for ops and the board',
+  'Single Source of Truth',
   'Replay if the pack is wrong',
   'Safe to ask in English later',
 ];
@@ -62,8 +92,8 @@ const DECISIONS = [
   },
   {
     decide: 'Microsoft Fabric to host it',
-    means: 'Collect, store, and Power BI on one Microsoft workspace AviLease already understands.',
-    why: 'One bill, one login, no fourth reporting tool beside Excel.',
+    means: 'Collect in Data Factory, store in OneLake/lakehouse, and serve Power BI from the same workspace AviLease already understands.',
+    why: 'One bill, one login, and one workspace for ops + board reporting (no extra reporting tool beside Excel).',
   },
   {
     decide: 'Hourly refresh on day one',
@@ -72,8 +102,8 @@ const DECISIONS = [
   },
   {
     decide: 'Do not put finance inside the CRM platform',
-    means: 'Core Financial stays the money source. The lake sits beside it.',
-    why: 'The books are not in Leaseworks. A CRM-only warehouse would miss rent.',
+    means: 'Keep Core Financial as the source of the books, and let the lakehouse sit next to it for reporting.',
+    why: 'The full books are not in Leaseworks. If finance is CRM-only, rent can be missing from the numbers you show.',
   },
 ];
 
@@ -96,6 +126,18 @@ function Cell({ value, chosen }) {
         {value}
       </span>
     </td>
+  );
+}
+
+function ProviderLogo({ text, tint }) {
+  return (
+    <span
+      className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-prodigy-line bg-white text-sm font-bold text-avi-deep"
+      style={{ backgroundColor: tint }}
+      aria-hidden="true"
+    >
+      {text}
+    </span>
   );
 }
 
@@ -140,13 +182,27 @@ export default function ArchitectureDecisions() {
                   }`}
                 >
                   <th className="px-4 py-3 text-sm font-semibold text-avi-deep">
-                    <span className="block">{row.name}</span>
-                    <span
-                      className={`mt-0.5 inline-block text-[10px] font-bold uppercase tracking-wide ${
-                        row.chosen ? 'text-[#00B7C3]' : 'text-prodigy-muted'
-                      }`}
-                    >
-                      {row.tag}
+                    <span className="block">
+                      <span className="flex items-start gap-3">
+                        {row.logoText && (
+                          <ProviderLogo text={row.logoText} tint={row.logoTint || '#F3F2F1'} />
+                        )}
+                        <span>
+                          <span className="block">{row.name}</span>
+                          <span
+                            className={`mt-0.5 inline-block text-[10px] font-bold uppercase tracking-wide ${
+                              row.chosen ? 'text-[#00B7C3]' : 'text-prodigy-muted'
+                            }`}
+                          >
+                            {row.tag}
+                          </span>
+                          {row.comment && (
+                            <span className="mt-1 block text-[10px] font-medium leading-snug text-prodigy-muted">
+                              {row.comment}
+                            </span>
+                          )}
+                        </span>
+                      </span>
                     </span>
                   </th>
                   {row.cells.map((c, i) => (
@@ -159,7 +215,7 @@ export default function ArchitectureDecisions() {
         </div>
         <p className="border-t border-prodigy-line px-4 py-2.5 text-xs text-prodigy-muted">
           Lakehouse = keep the original extract, publish one cleaned fleet row, same tables for
-          screens and Power BI. Spreadsheets are what you have today. Real-time is a later add-on,
+          screens and Power BI. Excel packs are what you have today. Real-time is a later add-on,
           not the starting design.
         </p>
       </div>

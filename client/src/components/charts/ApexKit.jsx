@@ -154,6 +154,49 @@ export function ApexAreaDual({ categories, revenue, budget, height = 120 }) {
   );
 }
 
+export function ApexSpreadBars({ categories, spread, height = 110 }) {
+  const options = {
+    chart: {
+      type: 'bar',
+      toolbar: { show: false },
+      fontFamily: 'Lexend Deca, sans-serif',
+      foreColor: '#272727',
+    },
+    plotOptions: {
+      bar: {
+        horizontal: true,
+        borderRadius: 6,
+        barHeight: '70%',
+        distributed: true,
+      },
+    },
+    colors: PALETTE,
+    dataLabels: {
+      enabled: true,
+      style: { fontSize: '11px', fontWeight: 600, colors: ['#fff'] },
+    },
+    xaxis: {
+      categories,
+      labels: { style: { colors: BRAND.muted, fontSize: '10px' } },
+      axisBorder: { show: false },
+      axisTicks: { show: false },
+    },
+    yaxis: {
+      labels: { style: { colors: BRAND.ink, fontSize: '10px', fontWeight: 600 } },
+    },
+    grid: { borderColor: BRAND.line, strokeDashArray: 4 },
+    legend: { show: false },
+    tooltip: {
+      theme: 'light',
+      y: { formatter: (v) => `${v >= 0 ? '+' : ''}$${v}M` },
+    },
+  };
+
+  return (
+    <Chart options={options} series={[{ name: 'Spread', data: spread }]} type="bar" height={height} />
+  );
+}
+
 export function ApexRadial({ value, label, height = 200 }) {
   const options = {
     chart: { type: 'radialBar', fontFamily: 'Lexend Deca, sans-serif' },

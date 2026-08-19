@@ -22,6 +22,16 @@ export default function CollabFooter() {
           Confidential demo · figures on the cover match the public site; fleet rows are sample data
         </p>
       </div>
+      <div className="border-t border-[#E4D9C8]/80 bg-[#FAF7F1]">
+        <p className="mx-auto max-w-6xl px-4 py-3 text-center text-[11px] text-prodigy-muted md:px-8">
+          Prepared by{' '}
+          <span className="font-semibold text-avi-deep">Pavan Patel</span>
+          {' · '}
+          Development Manager
+          {' · '}
+          <span className="font-semibold text-prodigy-crimson">Prodigy</span>
+        </p>
+      </div>
     </footer>
   );
 }

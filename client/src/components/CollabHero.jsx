@@ -20,9 +20,8 @@ export default function CollabHero() {
           One number for a global fleet — built with AviLease, delivered by Prodigy
         </h2>
         <p className="mt-3 max-w-xl text-sm leading-relaxed text-white/70">
-          The global aircraft lessor with roots in Saudi Arabia. This workspace joins Leaseworks,
-          Core Financial, and Aerlytix so ops and the board share the same aircraft, rent, and
-          status.
+          This workspace joins Leaseworks, Core Financials, Aerlytix and any other data sources
+          so the organization shares the same metrics — what reporting and AI can safely use.
         </p>
         <div className="mt-6 grid grid-cols-2 gap-4 border-t border-white/10 pt-5 sm:grid-cols-4">
           {STATS.map((s) => (
